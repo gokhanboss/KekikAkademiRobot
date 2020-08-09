@@ -1,0 +1,9 @@
+git+https://github.com/pyrogram/pyrogram@asyncio
+tgcrypto==1.2.0
+asyncio==3.4.3
+aiohttp==3.6.2
+google_search_client==0.1
+pyfiglet==0.8.post1
+speedtest_cli==2.1.2
+requests==2.24.0
+rich==5.0.0
