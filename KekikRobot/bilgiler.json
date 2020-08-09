@@ -1,5 +1,6 @@
 {
     "api_id"    : 22222222,
     "api_hash"  : "c1c1c1c1c1c1c1c1c1c1c1c1c1c",
-    "bot_token" : "adsasdasdasdsadasd"
+    "bot_token" : "adsasdasdasdsadasd",
+    "admin_id"   : "5555555"
 }

@@ -13,12 +13,52 @@ kekikRobot        = Client(
     plugins         = dict(root="botAlani/Eklentiler")
 )
 
+# başlıyoruz
+
 from time import time, sleep
 from os import listdir
 
+@kekikRobot.on_message(Filters.command(['start'], ['!','.','/']))
+async def ilk(client, message):
+    # Hoş Geldin Mesajı
+    await message.reply_chat_action("typing")                           # yazıyor aksiyonu
+    await message.reply("Hoş Geldin!\n/yardim alabilirsin.")            # cevapla
+
+    # LOG Alanı
+    sohbet = await kekikRobot.get_chat(message.chat.id)
+
+    log = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id}) | Bota Bağlantı Sağladı"
+    
+    log += f"\n\n**Sohbet Türü :** __{message.chat.type}__"
+    if message.chat.type != 'private':
+        log += f"\n\n\t\t`{sohbet.title}`__'den__ `{message.text}` __yolladı..__"
+    else:
+        log += f"\n\n\t\t`{message.text}` __yolladı..__"
+
+    await client.send_message(bilgiler['admin_id'], log)                      # admin_id'ye log gönder
+
 @kekikRobot.on_message(Filters.command(['yardim'], ['!','.','/']))
 async def yardim_mesaji(client, message):
-    ilk_mesaj = await message.reply("__Bekleyin..__")
+    # LOG Alanı
+    sohbet = await kekikRobot.get_chat(message.chat.id)
+    log = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
+    if message.chat.type != 'private':
+        log += f"\n\n\t\t`{sohbet.title}`__'den__ `{message.text}` __yolladı..__"
+    else:
+        log += f"\n\n\t\t`{message.text}` __yolladı..__"
+    log +=  "\n\n**Sohbet Türü :** __{message.chat.type}__"
+    await client.send_message(bilgiler['admin_id'], log)                      # admin_id'ye log gönder
+
+    #-------------------------------------------------------------------------#
+    await message.reply_chat_action("typing")
+
+    cevaplanan_mesaj = message.reply_to_message
+
+    if cevaplanan_mesaj is None:
+        ilk_mesaj = await message.reply("__Bekleyin..__")
+    else:
+        ilk_mesaj = await message.reply("__Bekleyin..__", reply_to_message_id = cevaplanan_mesaj.message_id)
+    
     basla = time()
     await ilk_mesaj.edit("__Aranıyor...__")
 
@@ -45,28 +85,49 @@ async def yardim_mesaji(client, message):
 
 @kekikRobot.on_message(Filters.command(['eklenti'], ['!','.','/']))
 async def eklenti_gonder(client, message):
-    ilk_mesaj = await message.reply("__Bekleyin..__")
-    
-    if message.reply_to_message:    # Eğer mesaj yanıtlanan bir mesaj ise
-        yanitlanacakMesaj = message.reply_to_message.message_id
+    # LOG Alanı
+    sohbet = await kekikRobot.get_chat(message.chat.id)
+    log = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
+    if message.chat.type != 'private':
+        log += f"\n\n\t\t`{sohbet.title}`__'den__ `{message.text}` __yolladı..__"
     else:
-        yanitlanacakMesaj = message.message_id
+        log += f"\n\n\t\t`{message.text}` __yolladı..__"
+    log +=  "\n\n**Sohbet Türü :** __{message.chat.type}__"
+    await client.send_message(bilgiler['admin_id'], log)                      # admin_id'ye log gönder
+
+    #-------------------------------------------------------------------------#
+    await message.reply_chat_action("typing")
+
+    cevaplanan_mesaj = message.reply_to_message
+    if cevaplanan_mesaj is None:
+        ilk_mesaj = await message.reply("__Bekleyin..__")
+    else:
+        ilk_mesaj = await message.reply("__Bekleyin..__", reply_to_message_id=cevaplanan_mesaj.message_id)
     
     girilen_yazi = message.text                                 # komut ile birlikle mesajı tut
 
     if len(girilen_yazi.split()) == 1:                          # eğer sadece komut varsa
-        await ilk_mesaj.edit("`DosyaAdı` **Girmelisin!**")          # uyarı ver
+        await ilk_mesaj.edit("`DosyaAdı` **Girmelisin!**")      # uyarı ver
         return                                                  # geri dön
 
     dosya = " ".join(girilen_yazi.split()[1:2])                 # dosyayı komuttan ayır (birinci kelime)
 
     if f"{dosya}.py" in listdir("botAlani/Eklentiler"):
         await ilk_mesaj.delete()
-        await message.reply_document(
-            document                = f"./botAlani/Eklentiler/{dosya}.py",
-            caption                 = f"__kekikRobot__ `{dosya}` __eklentisi..__",
-            disable_notification    = True,
-            reply_to_message_id     = yanitlanacakMesaj
-            )
+
+        if cevaplanan_mesaj is not None:
+            await message.reply_document(
+                document                = f"./botAlani/Eklentiler/{dosya}.py",
+                caption                 = f"__kekikRobot__ `{dosya}` __eklentisi..__",
+                disable_notification    = True,
+                reply_to_message_id     = cevaplanan_mesaj.message_id
+                )
+        else:
+            await message.reply_document(
+                document                = f"./botAlani/Eklentiler/{dosya}.py",
+                caption                 = f"__kekikRobot__ `{dosya}` __eklentisi..__",
+                disable_notification    = True,
+                )
+
     else:
         await ilk_mesaj.edit('**Dosya Bulunamadı!**')
