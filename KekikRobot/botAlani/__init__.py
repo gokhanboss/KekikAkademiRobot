@@ -23,7 +23,7 @@ async def yardim_mesaji(client, message):
     await ilk_mesaj.edit("__Aranıyor...__")
 
     mesaj = f"""Merhaba, [{message.from_user.first_name}](tg://user?id={message.from_user.id})!\n
-    Ben @KekikAkademi'nda yaratıldım.\n
+    Ben @KekikAkademi'de yaratıldım.\n
     Kaynak kodlarım [Burada](https://github.com/keyiflerolsun/KekikAkademiRobot)
     Kullanabileceğim komutlar ise eklentilerimde gizli..\n\n"""
 
