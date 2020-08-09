@@ -46,7 +46,7 @@ async def yardim_mesaji(client, message):
         log += f"\n\n\t\t`{sohbet.title}`__'den__ `{message.text}` __yolladı..__"
     else:
         log += f"\n\n\t\t`{message.text}` __yolladı..__"
-    log +=  "\n\n**Sohbet Türü :** __{message.chat.type}__"
+    log +=  f"\n\n**Sohbet Türü :** __{message.chat.type}__"
     await client.send_message(bilgiler['admin_id'], log)                      # admin_id'ye log gönder
 
     #-------------------------------------------------------------------------#
@@ -92,7 +92,7 @@ async def eklenti_gonder(client, message):
         log += f"\n\n\t\t`{sohbet.title}`__'den__ `{message.text}` __yolladı..__"
     else:
         log += f"\n\n\t\t`{message.text}` __yolladı..__"
-    log +=  "\n\n**Sohbet Türü :** __{message.chat.type}__"
+    log +=  f"\n\n**Sohbet Türü :** __{message.chat.type}__"
     await client.send_message(bilgiler['admin_id'], log)                      # admin_id'ye log gönder
 
     #-------------------------------------------------------------------------#
