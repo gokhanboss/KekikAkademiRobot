@@ -33,8 +33,7 @@ async def pastever(client, message):
     sonuc = requests.post(f"https://hastebin.com/documents", data = kod.encode("utf-8")).json()
 
     await message.reply(f'https://hastebin.com/{sonuc["key"]}.{uzanti}',
-                  disable_web_page_preview  = True,
-                  reply_to_message_id       = cevaplanan_mesaj.message_id
+                  disable_web_page_preview  = True
                   )
 
 @Client.on_message(Filters.command(['pasteal'], ['!','.','/']))
