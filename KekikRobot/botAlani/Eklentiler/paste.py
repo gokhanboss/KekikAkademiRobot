@@ -8,20 +8,22 @@ import os
 @Client.on_message(Filters.command(['pastever'], ['!','.','/']))
 async def pastever(client, message):
     await message.reply_chat_action("typing")
-    cevaplanan_mesaj = message.reply_to_message
     girilen_yazi = message.text
+    cevaplanan_mesaj = message.reply_to_message
     await asyncio.sleep(0.3)
 
     if cevaplanan_mesaj is None:
+        yanitlanacak_mesaj = message.message_id
         ilk_mesaj = await message.reply("__asyncio.sleep(0.3)__")
         if len(girilen_yazi.split()) == 1:
-            await ilk_mesaj.edit("Paste yapabilmek için `kod` ve `uzantı` vermelisiniz..")
+            await ilk_mesaj.edit("Paste yapabilmek için `uzantı` ve `kod` vermelisiniz..")
             return
         elif len(girilen_yazi.split()) == 2:
-            await ilk_mesaj.edit("Paste yapabilmek için `uzantı` da vermelisiniz..\n\n`.pastever py`")
+            await ilk_mesaj.edit("Paste yapabilmek için `uzantı` da vermelisiniz..\n\n`.pastever py` **kod**")
             return
     else:
-        ilk_mesaj = await message.reply("__asyncio.sleep(0.3)__", reply_to_message_id = cevaplanan_mesaj.message_id)
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+        ilk_mesaj = await message.reply("__asyncio.sleep(0.3)__", reply_to_message_id = yanitlanacak_mesaj)
         if len(girilen_yazi.split()) == 1:
             await ilk_mesaj.edit("Paste yapabilmek için `uzantı` da vermelisiniz..\n\n`.pastever py`")
             return
@@ -33,7 +35,8 @@ async def pastever(client, message):
     sonuc = requests.post(f"https://hastebin.com/documents", data = kod.encode("utf-8")).json()
 
     await message.reply(f'https://hastebin.com/{sonuc["key"]}.{uzanti}',
-                  disable_web_page_preview  = True
+                  disable_web_page_preview  = True,
+                  reply_to_message_id       = yanitlanacak_mesaj
                   )
 
 @Client.on_message(Filters.command(['pasteal'], ['!','.','/']))
@@ -47,7 +50,7 @@ async def pasteal(client, message):
         await ilk_mesaj.edit("__script'e çevrilecek hastebin linki yanıtlamanız gerekli..__")
         return
     elif not cevaplanan_mesaj.text.startswith("https://hastebin.com"):
-        await ilk_mesaj.edit("__sadece hastebin linki yanıtlaman gerekli..__")
+        await ilk_mesaj.edit("__sadece hastebin linki yanıtlaman gerekli..__\n\n`.pasteal`")
         return
     
     kod = message.reply_to_message.text.split('/')[-1]
