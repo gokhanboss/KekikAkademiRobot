@@ -21,15 +21,16 @@ async def pastever(client, message):
         elif len(girilen_yazi.split()) == 2:
             await ilk_mesaj.edit("Paste yapabilmek için `uzantı` da vermelisiniz..\n\n`.pastever py` **kod**")
             return
+        kod = " ".join(girilen_yazi.split()[2:]) 
     else:
         yanitlanacak_mesaj = cevaplanan_mesaj.message_id
         ilk_mesaj = await message.reply("__asyncio.sleep(0.3)__", reply_to_message_id = yanitlanacak_mesaj)
         if len(girilen_yazi.split()) == 1:
             await ilk_mesaj.edit("Paste yapabilmek için `uzantı` da vermelisiniz..\n\n`.pastever py`")
             return
+        kod = cevaplanan_mesaj.text
 
     uzanti = message.text.split()[1]
-    kod = " ".join(girilen_yazi.split()[2:])
     await ilk_mesaj.delete()
     
     sonuc = requests.post(f"https://hastebin.com/documents", data = kod.encode("utf-8")).json()
