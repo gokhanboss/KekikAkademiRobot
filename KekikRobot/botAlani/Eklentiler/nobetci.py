@@ -58,14 +58,18 @@ async def nobetci(client, message):
         await ilk_mesaj.edit("Arama yapabilmek için `ilçe` de girmelisiniz")
         return
 
+    il =  " ".join(girilen_yazi.split()[1:2]).lower()   # il'i komuttan ayrıştır (birinci kelime)
+    ilce = " ".join(girilen_yazi.split()[2:3]).lower()  # ilçe'yi komuttan ayrıştır (ikinci kelime)
+
     tr2eng = str.maketrans(" .,-*/+-ıİüÜöÖçÇşŞğĞ", "________iIuUoOcCsSgG")
-    il = " ".join(girilen_yazi.split()[1:2]).translate(tr2eng)          # il'i komuttan ayrıştır (birinci kelime)
-    ilce = " ".join(girilen_yazi.split()[2:3]).translate(tr2eng)        # ilçe'yi komuttan ayrıştır (ikinci kelime)
+    il = il.translate(tr2eng)
+    ilce = ilce.translate(tr2eng)
+    
     mesaj = f"Aranan Nöbetçi Eczane : `{ilce}` / `{il}`\n"
 
     try:
         for i in nobetciEczane(il, ilce):
-            mesaj += f"**\n{i['eczane_adi']}**\n__{i['eczane_adresi']}__\n`{i['eczane_telefonu']}`\n\n"
+            mesaj += f"**\n\t⚕ {i['eczane_adi']}**\n📍 __{i['eczane_adresi']}__\n\t☎️ `{i['eczane_telefonu']}`\n\n"
     except Exception as hata:
         mesaj = f"__Bir hata ile karşılaştım ;__\n\n`{hata}`"
 

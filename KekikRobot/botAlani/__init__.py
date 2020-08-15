@@ -26,30 +26,17 @@ async def ilk(client, message):
 
     # LOG Alanı
     sohbet = await kekikRobot.get_chat(message.chat.id)
-
-    log = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id}) | Bota Bağlantı Sağladı"
-    
-    log += f"\n\n**Sohbet Türü :** __{message.chat.type}__"
-    if message.chat.type != 'private':
-        log += f"\n\n\t\t`{sohbet.title}`__'den__ `{message.text}` __yolladı..__"
-    else:
-        log += f"\n\n\t\t`{message.text}` __yolladı..__"
-
-    await client.send_message(bilgiler['admin_id'], log)                      # admin_id'ye log gönder
-
-@kekikRobot.on_message(Filters.command(['yardim'], ['!','.','/']))
-async def yardim_mesaji(client, message):
-    # LOG Alanı
-    sohbet = await kekikRobot.get_chat(message.chat.id)
     log = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
     if message.chat.type != 'private':
         log += f"\n\n\t\t`{sohbet.title}`__'den__ `{message.text}` __yolladı..__"
     else:
         log += f"\n\n\t\t`{message.text}` __yolladı..__"
     log +=  f"\n\n**Sohbet Türü :** __{message.chat.type}__"
-    await client.send_message(bilgiler['admin_id'], log)                      # admin_id'ye log gönder
-
+    await client.send_message(bilgiler['log_id'], log)                        # admin_id'ye log gönder
     #-------------------------------------------------------------------------#
+
+@kekikRobot.on_message(Filters.command(['yardim'], ['!','.','/']))
+async def yardim_mesaji(client, message):
     await message.reply_chat_action("typing")
 
     cevaplanan_mesaj = message.reply_to_message
@@ -64,7 +51,7 @@ async def yardim_mesaji(client, message):
 
     mesaj = f"""Merhaba, [{message.from_user.first_name}](tg://user?id={message.from_user.id})!\n
     Ben @KekikAkademi'de yaratıldım.\n
-    Kaynak kodlarım [Burada](https://github.com/keyiflerolsun/KekikAkademiRobot)
+    Kaynak kodlarım [Burada](http://bc.vc/FvAcrkp)
     Kullanabileceğim komutlar ise eklentilerimde gizli..\n\n"""
 
     mesaj += "__Eklentilerim;__\n"
@@ -83,8 +70,6 @@ async def yardim_mesaji(client, message):
     except Exception as hata_mesaji:
         await ilk_mesaj.edit(hata_mesaji)
 
-@kekikRobot.on_message(Filters.command(['eklenti'], ['!','.','/']))
-async def eklenti_gonder(client, message):
     # LOG Alanı
     sohbet = await kekikRobot.get_chat(message.chat.id)
     log = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
@@ -93,9 +78,11 @@ async def eklenti_gonder(client, message):
     else:
         log += f"\n\n\t\t`{message.text}` __yolladı..__"
     log +=  f"\n\n**Sohbet Türü :** __{message.chat.type}__"
-    await client.send_message(bilgiler['admin_id'], log)                      # admin_id'ye log gönder
-
+    await client.send_message(bilgiler['log_id'], log)                        # admin_id'ye log gönder
     #-------------------------------------------------------------------------#
+
+@kekikRobot.on_message(Filters.command(['eklenti'], ['!','.','/']))
+async def eklenti_gonder(client, message):
     await message.reply_chat_action("typing")
 
     cevaplanan_mesaj = message.reply_to_message
@@ -131,3 +118,14 @@ async def eklenti_gonder(client, message):
 
     else:
         await ilk_mesaj.edit('**Dosya Bulunamadı!**')
+    
+    # LOG Alanı
+    sohbet = await kekikRobot.get_chat(message.chat.id)
+    log = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
+    if message.chat.type != 'private':
+        log += f"\n\n\t\t`{sohbet.title}`__'den__ `{message.text}` __yolladı..__"
+    else:
+        log += f"\n\n\t\t`{message.text}` __yolladı..__"
+    log +=  f"\n\n**Sohbet Türü :** __{message.chat.type}__"
+    await client.send_message(bilgiler['log_id'], log)                        # admin_id'ye log gönder
+    #-------------------------------------------------------------------------#
