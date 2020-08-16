@@ -1,6 +1,7 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, Message, Filters
+import asyncio
 import json
 
 bilgiler = json.load(open("bilgiler.json"))
@@ -8,22 +9,47 @@ bilgiler = json.load(open("bilgiler.json"))
 kekikUserBot        = Client(
     api_id          = bilgiler['api_id'],                   # my.telegram.org/apps
     api_hash        = bilgiler['api_hash'],                 # my.telegram.org/apps
-    session_name    = "@kekikUserBot",                      # Fark Etmez
+    session_name    = "@kekikUserBot",                        # Fark Etmez
     plugins         = dict(root="botAlani/Eklentiler")
 )
 
+# başlıyoruz
 from time import time, sleep
 from os import listdir
+""
+@kekikUserBot.on_message(Filters.command(['start'], ['!','.','/']))
+async def ilk(client, message):
+    # Hoş Geldin Mesajı
+    await message.reply_chat_action("typing")                           # yazıyor aksiyonu
+    await message.reply("Hoş Geldin!\n/yardim alabilirsin.")            # cevapla
 
-@kekikUserBot.on_message(Filters.command(['yardim'], ['!','.','/']) & Filters.me)
+@kekikUserBot.on_message(Filters.command(['yardim'], ['!','.','/']))
 async def yardim_mesaji(client, message):
-    ilk_mesaj = await message.edit("__Bekleyin..__")
+    # < Başlangıç
+    await message.reply_chat_action("typing")
+    await asyncio.sleep(0.3)
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
+
+    cevaplanan_mesaj    = message.reply_to_message
+    if cevaplanan_mesaj is None:
+        yanitlanacak_mesaj  = message.message_id
+    else:
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
+    
     basla = time()
     await ilk_mesaj.edit("__Aranıyor...__")
 
     mesaj = f"""Merhaba, [{message.from_user.first_name}](tg://user?id={message.from_user.id})!\n
     Ben @KekikAkademi'de yaratıldım.\n
-    Kaynak kodlarım [Burada](https://github.com/keyiflerolsun/KekikAkademiRobot)
+    Kaynak kodlarım [Burada](http://bc.vc/FvAcrkp)
     Kullanabileceğim komutlar ise eklentilerimde gizli..\n\n"""
 
     mesaj += "__Eklentilerim;__\n"
@@ -38,18 +64,30 @@ async def yardim_mesaji(client, message):
     mesaj += f"\n**Tepki Süresi :** `{str(sure)[:4]} sn`"
 
     try:
-        await ilk_mesaj.edit(mesaj, disable_web_page_preview = True, parse_mode = "Markdown")
-    except Exception as hata_mesaji:
-        await ilk_mesaj.edit(hata_mesaji)
+        await ilk_mesaj.edit(mesaj)
+    except Exception as hata:
+        await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")
 
-@kekikUserBot.on_message(Filters.command(['eklenti'], ['!','.','/']) & Filters.me)
+@kekikUserBot.on_message(Filters.command(['eklenti'], ['!','.','/']))
 async def eklenti_gonder(client, message):
-    ilk_mesaj = await message.edit("__Bekleyin..__")
-    
-    if message.reply_to_message:                                # Eğer mesaj yanıtlanan bir mesaj ise
-        yanitlanacakMesaj = message.reply_to_message.message_id
+    # < Başlangıç
+    await message.reply_chat_action("typing")
+    await asyncio.sleep(0.3)
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
+
+    cevaplanan_mesaj    = message.reply_to_message
+    if cevaplanan_mesaj is None:
+        yanitlanacak_mesaj  = message.message_id
     else:
-        yanitlanacakMesaj = message.message_id
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
     
     girilen_yazi = message.text                                 # komut ile birlikle mesajı tut
 
@@ -61,11 +99,21 @@ async def eklenti_gonder(client, message):
 
     if f"{dosya}.py" in listdir("botAlani/Eklentiler"):
         await ilk_mesaj.delete()
-        await message.reply_document(
-            document                = f"./botAlani/Eklentiler/{dosya}.py",
-            caption                 = f"__kekikUserBot__ `{dosya}` __eklentisi..__",
-            disable_notification    = True,
-            reply_to_message_id     = yanitlanacakMesaj
-            )
+
+        if cevaplanan_mesaj is not None:
+            await message.reply_document(
+                document                = f"./botAlani/Eklentiler/{dosya}.py",
+                caption                 = f"__kekikUserBot__ `{dosya}` __eklentisi..__",
+                disable_notification    = True,
+                reply_to_message_id     = yanitlanacak_mesaj
+                )
+        else:
+            await message.reply_document(
+                document                = f"./botAlani/Eklentiler/{dosya}.py",
+                caption                 = f"__kekikUserBot__ `{dosya}` __eklentisi..__",
+                disable_notification    = True,
+                reply_to_message_id     = yanitlanacak_mesaj
+                )
+
     else:
         await ilk_mesaj.edit('**Dosya Bulunamadı!**')

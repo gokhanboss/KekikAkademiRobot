@@ -4,10 +4,27 @@ from pyrogram import Client, Filters
 import asyncio
 import datetime
 
-@Client.on_message(Filters.command(['ping'], ['!','.','/']) & Filters.me)
+@Client.on_message(Filters.command(['ping'], ['!','.','/']))
 async def ping(client, message):
     basla = datetime.datetime.now()
-    ilk_mesaj = await message.edit("Bekleyin..")
+    
+    # < Başlangıç
+    uyku = await message.edit("__asyncio.sleep(0.3)__")
+    await asyncio.sleep(0.3)
+    
+    cevaplanan_mesaj    = message.reply_to_message
+    if cevaplanan_mesaj is None:
+        yanitlanacak_mesaj  = message.message_id
+    else:
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
 
     mesaj = "__Pong!__"
 

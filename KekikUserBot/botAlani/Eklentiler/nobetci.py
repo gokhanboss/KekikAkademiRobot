@@ -1,6 +1,7 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
 from pyrogram import Client, Filters
+import asyncio
 from os import remove
 import requests
 from bs4 import BeautifulSoup
@@ -41,15 +42,26 @@ def nobetciEczane(il, ilce):
 # import json
 # print(json.dumps(nobetci("canakkale", "merkez"), indent=2, sort_keys=False, ensure_ascii=False))
 
-@Client.on_message(Filters.command(['nobetci'],['!','.','/']) & Filters.me)
+@Client.on_message(Filters.command(['nobetci'],['!','.','/']))
 async def nobetci(client, message):
-    cevaplanan_mesaj = message.reply_to_message
+    # < Başlangıç
+    uyku = await message.edit("__asyncio.sleep(0.3)__")
+    await asyncio.sleep(0.3)
     
+    cevaplanan_mesaj    = message.reply_to_message
     if cevaplanan_mesaj is None:
-        ilk_mesaj = await message.edit("__Bekleyin..__")
+        yanitlanacak_mesaj  = message.message_id
     else:
-        ilk_mesaj = await message.edit("__Bekleyin..__", reply_to_message_id=cevaplanan_mesaj.message_id)
-
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
+    
     girilen_yazi = message.text
     if len(girilen_yazi.split()) == 1:
         await ilk_mesaj.edit("Arama yapabilmek için `il` ve `ilçe` girmelisiniz")
@@ -58,18 +70,22 @@ async def nobetci(client, message):
         await ilk_mesaj.edit("Arama yapabilmek için `ilçe` de girmelisiniz")
         return
 
+    il =  " ".join(girilen_yazi.split()[1:2]).lower()   # il'i komuttan ayrıştır (birinci kelime)
+    ilce = " ".join(girilen_yazi.split()[2:3]).lower()  # ilçe'yi komuttan ayrıştır (ikinci kelime)
+
     tr2eng = str.maketrans(" .,-*/+-ıİüÜöÖçÇşŞğĞ", "________iIuUoOcCsSgG")
-    il = " ".join(girilen_yazi.split()[1:2]).translate(tr2eng)          # il'i komuttan ayrıştır (birinci kelime)
-    ilce = " ".join(girilen_yazi.split()[2:3]).translate(tr2eng)        # ilçe'yi komuttan ayrıştır (ikinci kelime)
+    il = il.translate(tr2eng)
+    ilce = ilce.translate(tr2eng)
+    
     mesaj = f"Aranan Nöbetçi Eczane : `{ilce}` / `{il}`\n"
 
     try:
         for i in nobetciEczane(il, ilce):
-            mesaj += f"**\n{i['eczane_adi']}**\n__{i['eczane_adresi']}__\n`{i['eczane_telefonu']}`\n\n"
+            mesaj += f"**\n\t⚕ {i['eczane_adi']}**\n📍 __{i['eczane_adresi']}__\n\t☎️ `{i['eczane_telefonu']}`\n\n"
     except Exception as hata:
-        mesaj = f"__Bir hata ile karşılaştım ;__\n\n`{hata}`"
+        mesaj = f"**Uuppss:**\n\n`{hata}`"
 
     try:
-        await ilk_mesaj.edit(mesaj, disable_web_page_preview=True, parse_mode="Markdown")
-    except Exception as hata_mesaji:
-        await ilk_mesaj.edit(hata_mesaji)
+        await ilk_mesaj.edit(mesaj)
+    except Exception as hata:
+        await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")

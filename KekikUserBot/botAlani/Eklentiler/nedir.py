@@ -1,6 +1,7 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
 from pyrogram import Client, Filters
+import asyncio
 from os import remove
 import requests
 from bs4 import BeautifulSoup
@@ -21,14 +22,25 @@ def neNedir(ne):
 # print(nedir("restoran") + '\n')
 # print(nedir("laparoskopi") + '\n')
 
-@Client.on_message(Filters.command(['nedir'],['!','.','/']) & Filters.me)
+@Client.on_message(Filters.command(['nedir'],['!','.','/']))
 async def nedir(client, message):
-    cevaplanan_mesaj = message.reply_to_message
+    # < Başlangıç
+    uyku = await message.edit("__asyncio.sleep(0.3)__")
+    await asyncio.sleep(0.3)
     
+    cevaplanan_mesaj    = message.reply_to_message
     if cevaplanan_mesaj is None:
-        ilk_mesaj = await message.edit("__Bekleyin..__")
+        yanitlanacak_mesaj  = message.message_id
     else:
-        ilk_mesaj = await message.edit("__Bekleyin..__", reply_to_message_id=cevaplanan_mesaj.message_id)
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
 
     girilen_yazi = message.text
     if len(girilen_yazi.split()) == 1:
@@ -40,9 +52,9 @@ async def nedir(client, message):
     try:
         mesaj = neNedir(bakalim)
     except Exception as hata:
-        mesaj = f"__Bir hata ile karşılaştım ;__\n\n`{hata}`"
+        mesaj = f"**Uuppss:**\n\n`{hata}`"
 
     try:
-        await ilk_mesaj.edit(mesaj, disable_web_page_preview=True, parse_mode="Markdown")
-    except Exception as hata_mesaji:
-        await ilk_mesaj.edit(hata_mesaji)
+        await ilk_mesaj.edit(mesaj)
+    except Exception as hata:
+        await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")
