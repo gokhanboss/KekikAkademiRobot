@@ -1,6 +1,7 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
 from pyrogram import Client, Filters
+import asyncio
 from time import time
 import requests
 
@@ -25,6 +26,12 @@ async def googleNasilKullanilir(client, message):                           # fo
     )
     #------------------------------------------------------------- Başlangıç >
 
+    girilen_yazi = message.text
+    if len(girilen_yazi.split()) == 1:
+        await ilk_mesaj.edit("Arama yapabilmek için kelime girmelisiniz..")
+        return
+    await ilk_mesaj.edit("Aranıyor...")
+    
     basla = time()                                                          # Zamanı Başlat
     girdi = " ".join(girilen_yazi.split()[1:])                              # girdiyi komuttan ayrıştır
 

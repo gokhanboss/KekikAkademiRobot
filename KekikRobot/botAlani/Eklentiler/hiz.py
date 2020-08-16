@@ -1,6 +1,7 @@
 # https://github.com/Skuzzy_xD/TelePyroBot
 
 from pyrogram import Client, Filters
+import asyncio
 from speedtest import Speedtest
 
 def speed_convert(size):

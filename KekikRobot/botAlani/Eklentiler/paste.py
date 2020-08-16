@@ -26,6 +26,7 @@ async def pastever(client, message):
     )
     #------------------------------------------------------------- Başlangıç >
 
+    girilen_yazi = message.text
     if cevaplanan_mesaj is None:
         if len(girilen_yazi.split()) == 1:
             await ilk_mesaj.edit("Paste yapabilmek için `uzantı` ve `kod` vermelisiniz..")

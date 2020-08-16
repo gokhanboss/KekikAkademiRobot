@@ -1,8 +1,8 @@
 # https://github.com/Skuzzy_xD/TelePyroBot
 
 from pyrogram import Client, Filters
-import pyfiglet
 import asyncio
+import pyfiglet
 
 @Client.on_message(Filters.command(['figlet'], ['!','.','/']))
 async def figlet(client, message):

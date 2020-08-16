@@ -1,6 +1,7 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
 from pyrogram import Client, Filters
+import asyncio
 from os import remove
 import requests
 from bs4 import BeautifulSoup
