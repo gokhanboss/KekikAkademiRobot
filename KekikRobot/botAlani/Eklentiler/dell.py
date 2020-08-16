@@ -2,7 +2,6 @@
 
 from pyrogram import Message, Client, Filters
 import asyncio
-import json
 from botAlani import bilgiler
 
 @Client.on_message(Filters.command("dell", ['!','.','/']))
@@ -49,7 +48,16 @@ async def purge(client, message):
     if message.reply_to_message:
         for say_mesaj_id in range(message.reply_to_message.message_id, message.message_id):
             silinecek_mesaj_idleri.append(say_mesaj_id)
-        
+
+            if len(silinecek_mesaj_idleri) == 100: #TG_MAX_SELECT_LEN
+                await client.delete_messages(
+                    chat_id     = message.chat.id,
+                    message_ids = silinecek_mesaj_idleri,
+                    revoke      = True
+                    )
+                silinen_mesaj_sayisi += len(silinecek_mesaj_idleri)
+                silinecek_mesaj_idleri = []
+
         if len(silinecek_mesaj_idleri) > 0:
             await client.delete_messages(
                 chat_id     = message.chat.id,
