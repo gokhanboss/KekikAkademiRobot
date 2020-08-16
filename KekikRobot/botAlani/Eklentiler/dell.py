@@ -7,9 +7,24 @@ from botAlani import bilgiler
 
 @Client.on_message(Filters.command("dell", ['!','.','/']))
 async def purge(client, message):
-    ilk_mesaj = await message.reply("`Puuufff`")
+    # < Başlangıç
+    await message.reply_chat_action("typing")
+    await asyncio.sleep(0.3)
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
 
-    cevaplanan_mesaj = message.reply_to_message
+    cevaplanan_mesaj    = message.reply_to_message
+    if cevaplanan_mesaj is None:
+        yanitlanacak_mesaj  = message.message_id
+    else:
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
 
     if cevaplanan_mesaj is None:
         await ilk_mesaj.edit("__içinden geçmek istediğiniz yerden mesaj yanıtlayın__")

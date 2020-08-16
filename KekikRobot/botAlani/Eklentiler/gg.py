@@ -6,14 +6,25 @@ import requests
 
 @Client.on_message(Filters.command(['gg'], ['!','.', '/']))
 async def googleNasilKullanilir(client, message):                           # fonksiyon oluşturuyoruz
-    ilk_mesaj = await message.reply("Bekleyin..")
+    # < Başlangıç
+    await message.reply_chat_action("typing")
+    await asyncio.sleep(0.3)
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
 
-    girilen_yazi = message.text                                             # komut ile birlikle mesajı tut
-    if len(girilen_yazi.split()) == 1:                                      # eğer sadece komut varsa, girdi yoksa
-        await ilk_mesaj.edit("Arama yapabilmek için kelime girmelisiniz..")     # uyarı ver
-        return                                                              # geri dön
+    cevaplanan_mesaj    = message.reply_to_message
+    if cevaplanan_mesaj is None:
+        yanitlanacak_mesaj  = message.message_id
+    else:
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
 
-    await ilk_mesaj.edit("Aranıyor...")                                         # Mesajı Düzenle
     basla = time()                                                          # Zamanı Başlat
     girdi = " ".join(girilen_yazi.split()[1:])                              # girdiyi komuttan ayrıştır
 
@@ -29,8 +40,8 @@ async def googleNasilKullanilir(client, message):                           # fo
         sure = bitir - basla                                                # Duran - Başlayan Zaman
         mesaj += f"\n\nTepki Süresi : `{str(sure)[:4]} sn`"                 # Mesaja Ekle
         try:                                                                # Dene
-            await ilk_mesaj.edit(mesaj, disable_web_page_preview=True, parse_mode="Markdown")
-        except Exception as hata_mesaji:                                    # Başaramazsan
-            await ilk_mesaj.edit(hata_mesaji)                                   # Hatayı Söyle
+            await ilk_mesaj.edit(mesaj)
+        except Exception as hata:
+            await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")
     else:                                                                   # Eğer tepki yoksa
         await ilk_mesaj.edit("Hatalı bişeyler var, daha sonra tekrar deneyin..") # uyarı ver

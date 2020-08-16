@@ -1,6 +1,7 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, Message, Filters
+import asyncio
 import json
 
 bilgiler = json.load(open("bilgiler.json"))
@@ -14,7 +15,6 @@ kekikRobot        = Client(
 )
 
 # başlıyoruz
-
 from time import time, sleep
 from os import listdir
 
@@ -37,14 +37,24 @@ async def ilk(client, message):
 
 @kekikRobot.on_message(Filters.command(['yardim'], ['!','.','/']))
 async def yardim_mesaji(client, message):
+    # < Başlangıç
     await message.reply_chat_action("typing")
+    await asyncio.sleep(0.3)
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
 
-    cevaplanan_mesaj = message.reply_to_message
-
+    cevaplanan_mesaj    = message.reply_to_message
     if cevaplanan_mesaj is None:
-        ilk_mesaj = await message.reply("__Bekleyin..__")
+        yanitlanacak_mesaj  = message.message_id
     else:
-        ilk_mesaj = await message.reply("__Bekleyin..__", reply_to_message_id = cevaplanan_mesaj.message_id)
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
     
     basla = time()
     await ilk_mesaj.edit("__Aranıyor...__")
@@ -66,11 +76,11 @@ async def yardim_mesaji(client, message):
     mesaj += f"\n**Tepki Süresi :** `{str(sure)[:4]} sn`"
 
     try:
-        await ilk_mesaj.edit(mesaj, disable_web_page_preview = True, parse_mode = "Markdown")
-    except Exception as hata_mesaji:
-        await ilk_mesaj.edit(hata_mesaji)
+        await ilk_mesaj.edit(mesaj)
+    except Exception as hata:
+        await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")
 
-    # LOG Alanı
+    # < LOG Alanı
     sohbet = await kekikRobot.get_chat(message.chat.id)
     log = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
     if message.chat.type != 'private':
@@ -79,17 +89,28 @@ async def yardim_mesaji(client, message):
         log += f"\n\n\t\t`{message.text}` __yolladı..__"
     log +=  f"\n\n**Sohbet Türü :** __{message.chat.type}__"
     await client.send_message(bilgiler['log_id'], log)                        # admin_id'ye log gönder
-    #-------------------------------------------------------------------------#
+    #-------------------------------------------------------------- Log Alanı >
 
 @kekikRobot.on_message(Filters.command(['eklenti'], ['!','.','/']))
 async def eklenti_gonder(client, message):
+    # < Başlangıç
     await message.reply_chat_action("typing")
+    await asyncio.sleep(0.3)
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
 
-    cevaplanan_mesaj = message.reply_to_message
+    cevaplanan_mesaj    = message.reply_to_message
     if cevaplanan_mesaj is None:
-        ilk_mesaj = await message.reply("__Bekleyin..__")
+        yanitlanacak_mesaj  = message.message_id
     else:
-        ilk_mesaj = await message.reply("__Bekleyin..__", reply_to_message_id=cevaplanan_mesaj.message_id)
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
     
     girilen_yazi = message.text                                 # komut ile birlikle mesajı tut
 
@@ -107,19 +128,20 @@ async def eklenti_gonder(client, message):
                 document                = f"./botAlani/Eklentiler/{dosya}.py",
                 caption                 = f"__kekikRobot__ `{dosya}` __eklentisi..__",
                 disable_notification    = True,
-                reply_to_message_id     = cevaplanan_mesaj.message_id
+                reply_to_message_id     = yanitlanacak_mesaj
                 )
         else:
             await message.reply_document(
                 document                = f"./botAlani/Eklentiler/{dosya}.py",
                 caption                 = f"__kekikRobot__ `{dosya}` __eklentisi..__",
                 disable_notification    = True,
+                reply_to_message_id     = yanitlanacak_mesaj
                 )
 
     else:
         await ilk_mesaj.edit('**Dosya Bulunamadı!**')
     
-    # LOG Alanı
+    # < LOG Alanı
     sohbet = await kekikRobot.get_chat(message.chat.id)
     log = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
     if message.chat.type != 'private':
@@ -128,4 +150,4 @@ async def eklenti_gonder(client, message):
         log += f"\n\n\t\t`{message.text}` __yolladı..__"
     log +=  f"\n\n**Sohbet Türü :** __{message.chat.type}__"
     await client.send_message(bilgiler['log_id'], log)                        # admin_id'ye log gönder
-    #-------------------------------------------------------------------------#
+    #-------------------------------------------------------------- Log Alanı >

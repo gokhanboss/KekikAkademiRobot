@@ -7,14 +7,26 @@ import os
 
 @Client.on_message(Filters.command(['pastever'], ['!','.','/']))
 async def pastever(client, message):
+    # < Başlangıç
     await message.reply_chat_action("typing")
-    girilen_yazi = message.text
-    cevaplanan_mesaj = message.reply_to_message
     await asyncio.sleep(0.3)
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
+
+    cevaplanan_mesaj    = message.reply_to_message
+    if cevaplanan_mesaj is None:
+        yanitlanacak_mesaj  = message.message_id
+    else:
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
 
     if cevaplanan_mesaj is None:
-        yanitlanacak_mesaj = message.message_id
-        ilk_mesaj = await message.reply("__asyncio.sleep(0.3)__")
         if len(girilen_yazi.split()) == 1:
             await ilk_mesaj.edit("Paste yapabilmek için `uzantı` ve `kod` vermelisiniz..")
             return
@@ -23,8 +35,6 @@ async def pastever(client, message):
             return
         kod = " ".join(girilen_yazi.split()[2:]) 
     else:
-        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
-        ilk_mesaj = await message.reply("__asyncio.sleep(0.3)__", reply_to_message_id = yanitlanacak_mesaj)
         if len(girilen_yazi.split()) == 1:
             await ilk_mesaj.edit("Paste yapabilmek için `uzantı` da vermelisiniz..\n\n`.pastever py`")
             return
@@ -42,10 +52,24 @@ async def pastever(client, message):
 
 @Client.on_message(Filters.command(['pasteal'], ['!','.','/']))
 async def pasteal(client, message):
+    # < Başlangıç
+    await message.reply_chat_action("typing")
     await asyncio.sleep(0.3)
-    ilk_mesaj = await message.reply("__asyncio.sleep(0.3)__")
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
+
+    cevaplanan_mesaj    = message.reply_to_message
+    if cevaplanan_mesaj is None:
+        yanitlanacak_mesaj  = message.message_id
+    else:
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
     
-    cevaplanan_mesaj = message.reply_to_message
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
 
     if cevaplanan_mesaj is None:
         await ilk_mesaj.edit("__script'e çevrilecek hastebin linki yanıtlamanız gerekli..__")
@@ -61,7 +85,7 @@ async def pasteal(client, message):
     try:
         data = requests.get(raw).content
     except Exception as hata:
-        await ilk_mesaj.edit(f'**Hata**\n__Muhtemelen yanıtladığın mesajda sadece link yok..__\n\n\t`{hata}`')
+        await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")
 
     await ilk_mesaj.delete()
 
