@@ -4,6 +4,25 @@ from pyrogram import Message, Client, Filters
 import asyncio
 from botAlani import bilgiler
 
+async def admin_kontrol(message: Message) -> bool:
+    client = message._client
+    chat_id = message.chat.id
+    user_id = message.from_user.id
+
+    durum_kontrol = await client.get_chat_member(
+        chat_id =   chat_id,
+        user_id =   user_id
+    )
+    yonetici = [
+        "creator",
+        "administrator"
+    ]
+
+    if durum_kontrol.status not in yonetici:
+        return False
+    else:
+        return True
+
 @Client.on_message(Filters.command("dell", ['!','.','/']))
 async def purge(client, message):
     # < Başlangıç
@@ -29,7 +48,7 @@ async def purge(client, message):
         return
     
     if message.chat.type in ("supergroup", "channel"):
-        if message.from_user.id != bilgiler['kurucu']:
+        if await admin_kontrol(message):
             await ilk_mesaj.edit(f"Admin değilmişim :)\n\n`{message.from_user.id}` __!=__ `{bilgiler['kurucu']}`")
             await asyncio.sleep(2)
             await ilk_mesaj.delete()
