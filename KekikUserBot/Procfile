@@ -1,1 +1,1 @@
-worker: python kekikUserBot.py
+worker: python basla.py

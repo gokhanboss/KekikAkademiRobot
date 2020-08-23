@@ -2,7 +2,6 @@
 
 from pyrogram import Message, Client, Filters
 import asyncio
-from botAlani import bilgiler
 
 async def admin_kontrol(message: Message) -> bool:
     client = message._client
