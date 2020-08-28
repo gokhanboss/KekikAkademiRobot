@@ -35,7 +35,7 @@ async def yt(client, message):
     else:
         verilen_link = cevaplanan_mesaj.text
 
-    if not cevaplanan_mesaj and (verilen_link.split()) > 1:
+    if not cevaplanan_mesaj and (len(verilen_link.split())) > 0:
         await ilk_mesaj.edit("**Yalnızca Link Verin**")
         return
 
