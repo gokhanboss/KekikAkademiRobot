@@ -7,10 +7,9 @@ import pyfiglet
 @Client.on_message(Filters.command(['figlet'], ['!','.','/']))
 async def figlet(client, message):
     # < Başlangıç
-    await message.reply_chat_action("typing")
+    uyku = await message.edit("__asyncio.sleep(0.3)__")
     await asyncio.sleep(0.3)
-    uyku = await message.reply("__asyncio.sleep(0.3)__")
-
+    
     cevaplanan_mesaj    = message.reply_to_message
     if cevaplanan_mesaj is None:
         yanitlanacak_mesaj  = message.message_id

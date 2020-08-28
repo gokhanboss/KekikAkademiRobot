@@ -11,7 +11,7 @@ kekikRobot        = Client(
     api_hash        = bilgiler['api_hash'],                 # my.telegram.org/apps
     session_name    = "@kekikRobot",                        # Fark Etmez
     bot_token       = bilgiler['bot_token'],                # @BotFather
-    plugins         = dict(root="botAlani/Eklentiler")
+    plugins         = dict(root="roBot/botAlani/Eklentiler")
 )
 
 # başlıyoruz
@@ -66,7 +66,7 @@ async def yardim_mesaji(client, message):
 
     mesaj += "__Eklentilerim;__\n"
 
-    for dosya in listdir("./botAlani/Eklentiler/"):
+    for dosya in listdir("./roBot/botAlani/Eklentiler/"):
         if not dosya.endswith(".py"):
             continue
         mesaj += f"📂 `{dosya.replace('.py','')}`\n"
@@ -120,19 +120,19 @@ async def eklenti_gonder(client, message):
 
     dosya = " ".join(girilen_yazi.split()[1:2])                 # dosyayı komuttan ayır (birinci kelime)
 
-    if f"{dosya}.py" in listdir("botAlani/Eklentiler"):
+    if f"{dosya}.py" in listdir("roBot/botAlani/Eklentiler"):
         await ilk_mesaj.delete()
 
         if cevaplanan_mesaj is not None:
             await message.reply_document(
-                document                = f"./botAlani/Eklentiler/{dosya}.py",
+                document                = f"./roBot/botAlani/Eklentiler/{dosya}.py",
                 caption                 = f"__kekikRobot__ `{dosya}` __eklentisi..__",
                 disable_notification    = True,
                 reply_to_message_id     = yanitlanacak_mesaj
                 )
         else:
             await message.reply_document(
-                document                = f"./botAlani/Eklentiler/{dosya}.py",
+                document                = f"./roBot/botAlani/Eklentiler/{dosya}.py",
                 caption                 = f"__kekikRobot__ `{dosya}` __eklentisi..__",
                 disable_notification    = True,
                 reply_to_message_id     = yanitlanacak_mesaj

@@ -1,1 +1,1 @@
-worker: python kekikRobot.py
+worker: python basla.py

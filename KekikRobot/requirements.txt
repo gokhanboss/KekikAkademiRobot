@@ -7,3 +7,6 @@ pyfiglet==0.8.post1
 speedtest_cli==2.1.2
 requests==2.24.0
 rich==5.0.0
+colorama==0.4.3
+pytz==2019.3
+git+https://gitlab.com/obuilds/public/pytube@ob-v1
