@@ -1,11 +1,11 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 import requests
 import os
 
-@Client.on_message(Filters.command(['pastever'], ['!','.','/']))
+@Client.on_message(filters.command(['pastever'], ['!','.','/']))
 async def pastever(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")
@@ -51,7 +51,7 @@ async def pastever(client, message):
                   reply_to_message_id       = yanitlanacak_mesaj
                   )
 
-@Client.on_message(Filters.command(['pasteal'], ['!','.','/']))
+@Client.on_message(filters.command(['pasteal'], ['!','.','/']))
 async def pasteal(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

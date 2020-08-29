@@ -1,10 +1,10 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 import requests, os, platform
 
-@Client.on_message(Filters.command(['sistem'], ['!','.','/']))
+@Client.on_message(filters.command(['sistem'], ['!','.','/']))
 async def sistem(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

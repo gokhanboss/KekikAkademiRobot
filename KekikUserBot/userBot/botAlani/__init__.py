@@ -1,6 +1,6 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Message, Filters
+from pyrogram import Client, filters
 import asyncio
 import json
 
@@ -17,13 +17,13 @@ kekikUserBot        = Client(
 from time import time, sleep
 from os import listdir
 ""
-@kekikUserBot.on_message(Filters.command(['start'], ['!','.','/']))
+@kekikUserBot.on_message(filters.command(['start'], ['!','.','/']))
 async def ilk(client, message):
     # Hoş Geldin Mesajı
     await message.reply_chat_action("typing")                           # yazıyor aksiyonu
     await message.reply("Hoş Geldin!\n/yardim alabilirsin.")            # cevapla
 
-@kekikUserBot.on_message(Filters.command(['yardim'], ['!','.','/']))
+@kekikUserBot.on_message(filters.command(['yardim'], ['!','.','/']))
 async def yardim_mesaji(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")
@@ -68,7 +68,7 @@ async def yardim_mesaji(client, message):
     except Exception as hata:
         await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")
 
-@kekikUserBot.on_message(Filters.command(['eklenti'], ['!','.','/']))
+@kekikUserBot.on_message(filters.command(['eklenti'], ['!','.','/']))
 async def eklenti_gonder(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")

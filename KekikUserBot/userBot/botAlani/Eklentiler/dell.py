@@ -1,6 +1,7 @@
 # https://github.com/Skuzzy_xD/TelePyroBot
 
-from pyrogram import Message, Client, Filters
+from pyrogram import Client, filters
+from pyrogram.types import Message
 import asyncio
 
 async def admin_kontrol(message: Message) -> bool:
@@ -22,7 +23,7 @@ async def admin_kontrol(message: Message) -> bool:
     else:
         return True
 
-@Client.on_message(Filters.command("dell", ['!','.','/']))
+@Client.on_message(filters.command("dell", ['!','.','/']))
 async def purge(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

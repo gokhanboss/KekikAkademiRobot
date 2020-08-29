@@ -1,6 +1,6 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 from os import remove
 import requests
@@ -25,7 +25,7 @@ def havaDurumu(sehir):
 # print(havaDurumu("çanakkale"))
 # print(havaDurumu("new york"))
 
-@Client.on_message(Filters.command(['hava'],['!','.','/']))
+@Client.on_message(filters.command(['hava'],['!','.','/']))
 async def hava(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")
