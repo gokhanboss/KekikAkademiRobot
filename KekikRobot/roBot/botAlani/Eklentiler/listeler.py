@@ -1,8 +1,8 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
-@Client.on_message(Filters.command(['admin'],['!','.','/']))
+@Client.on_message(filters.command(['admin'],['!','.','/']))
 async def admin(client, message):
     ilk_mesaj = await message.reply("Yönetici Listesini Çıkartıyorum..")
 
@@ -24,7 +24,7 @@ async def admin(client, message):
         await ilk_mesaj.edit(f'**Yönetici Listesi**:\n{kurucu}{adminler}', parse_mode="Markdown", disable_web_page_preview=True)
 
 
-@Client.on_message(Filters.command(['bot'],['!','.','/']))
+@Client.on_message(filters.command(['bot'],['!','.','/']))
 async def bot(client, message):
     ilk_mesaj = await message.reply("Bot Listesini Çıkartıyorum..")
 
@@ -38,7 +38,7 @@ async def bot(client, message):
         await ilk_mesaj.edit(f'**Bot Listesi**:\n{botlar}', parse_mode="Markdown", disable_web_page_preview=True)
 
 
-@Client.on_message(Filters.command(['silik'],['!','.','/']))
+@Client.on_message(filters.command(['silik'],['!','.','/']))
 async def silik(client, message):
     ilk_mesaj = await message.reply("Silinmiş Hesapları Sayıyorum..")
 
@@ -53,7 +53,7 @@ async def silik(client, message):
         await ilk_mesaj.edit(f'__Silik Üye Sayısı__ : `{sayac}`', disable_web_page_preview=True)
 
 
-@Client.on_message(Filters.command(['hayalet'],['!','.','/']))
+@Client.on_message(filters.command(['hayalet'],['!','.','/']))
 async def hayalet(client, message):
     ilk_mesaj = await message.reply("Hayalet Hesapları Sayıyorum..")
 

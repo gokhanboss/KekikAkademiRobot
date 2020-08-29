@@ -1,10 +1,10 @@
 # https://github.com/Skuzzy_xD/TelePyroBot
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import io, os, sys, traceback
 import time, asyncio, requests
 
-@Client.on_message(Filters.command(["eval", "py"], ['!','.','/']) & Filters.me)
+@Client.on_message(filters.command(["eval", "py"], ['!','.','/']) & filters.me)
 async def eval(client, message):
     ilkMesaj = await message.reply_text("`İşleniyor...`")
 
@@ -65,7 +65,7 @@ async def aexec(code, client, message):
     return await locals()['__aexec'](client, message)
 
 
-@Client.on_message(Filters.command(["exec", "sh"], ['!','.','/']) & Filters.me)
+@Client.on_message(filters.command(["exec", "sh"], ['!','.','/']) & filters.me)
 async def execution(_, message):
     ilkMesaj = await message.reply_text("`İşleniyor...`")
 
@@ -111,7 +111,7 @@ async def execution(_, message):
         await ilkMesaj.edit(yanit)
     await message.delete()
 
-@Client.on_message(Filters.command(["ip"], ['!','.','/']) & Filters.me)
+@Client.on_message(filters.command(["ip"], ['!','.','/']) & filters.me)
 async def public_ip(client, message):
     ip = requests.get('https://api.ipify.org').text
     await message.reply_text(f'<b>Bot IP Address:</b>\n<code>{ip}</code>', parse_mode='html')

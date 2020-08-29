@@ -1,6 +1,6 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Message, Filters
+from pyrogram import Client, filters
 import asyncio
 import json
 
@@ -18,7 +18,7 @@ kekikRobot        = Client(
 from time import time, sleep
 from os import listdir
 
-@kekikRobot.on_message(Filters.command(['start'], ['!','.','/']))
+@kekikRobot.on_message(filters.command(['start'], ['!','.','/']))
 async def ilk(client, message):
     # Hoş Geldin Mesajı
     await message.reply_chat_action("typing")                           # yazıyor aksiyonu
@@ -35,7 +35,7 @@ async def ilk(client, message):
     await client.send_message(bilgiler['log_id'], log)                        # admin_id'ye log gönder
     #-------------------------------------------------------------------------#
 
-@kekikRobot.on_message(Filters.command(['yardim'], ['!','.','/']))
+@kekikRobot.on_message(filters.command(['yardim'], ['!','.','/']))
 async def yardim_mesaji(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")
@@ -91,7 +91,7 @@ async def yardim_mesaji(client, message):
     await client.send_message(bilgiler['log_id'], log)                        # admin_id'ye log gönder
     #-------------------------------------------------------------- Log Alanı >
 
-@kekikRobot.on_message(Filters.command(['eklenti'], ['!','.','/']))
+@kekikRobot.on_message(filters.command(['eklenti'], ['!','.','/']))
 async def eklenti_gonder(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")

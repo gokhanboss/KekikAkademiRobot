@@ -1,11 +1,11 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 from time import time
 import requests
 
-@Client.on_message(Filters.command(['gg'], ['!','.', '/']))
+@Client.on_message(filters.command(['gg'], ['!','.', '/']))
 async def googleNasilKullanilir(client, message):                           # fonksiyon oluşturuyoruz
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")

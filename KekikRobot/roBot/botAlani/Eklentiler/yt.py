@@ -1,12 +1,12 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 from pytube import YouTube
 import wget
 import os
 
-@Client.on_message(Filters.command(['yt'], ['!','.','/']))
+@Client.on_message(filters.command(['yt'], ['!','.','/']))
 async def yt(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")

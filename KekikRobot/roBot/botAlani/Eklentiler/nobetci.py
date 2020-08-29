@@ -1,6 +1,6 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 from os import remove
 import requests
@@ -42,7 +42,7 @@ def nobetciEczane(il, ilce):
 # import json
 # print(json.dumps(nobetci("canakkale", "merkez"), indent=2, sort_keys=False, ensure_ascii=False))
 
-@Client.on_message(Filters.command(['nobetci'],['!','.','/']))
+@Client.on_message(filters.command(['nobetci'],['!','.','/']))
 async def nobetci(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")

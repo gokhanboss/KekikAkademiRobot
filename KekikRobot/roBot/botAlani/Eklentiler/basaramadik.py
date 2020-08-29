@@ -1,9 +1,9 @@
 # https://github.com/Quiec/AsenaUserBot
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 
-@Client.on_message(Filters.command(['basaramadik'], ['!','.','/']))
+@Client.on_message(filters.command(['basaramadik'], ['!','.','/']))
 async def basaramadik(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")

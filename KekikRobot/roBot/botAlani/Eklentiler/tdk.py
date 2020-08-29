@@ -1,10 +1,10 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 import requests
 
-@Client.on_message(Filters.command(['tdk'], ['!','.','/']))
+@Client.on_message(filters.command(['tdk'], ['!','.','/']))
 async def tdk(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")

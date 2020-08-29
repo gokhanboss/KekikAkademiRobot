@@ -1,6 +1,6 @@
 # https://github.com/Skuzzy_xD/TelePyroBot
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 from speedtest import Speedtest
 
@@ -13,7 +13,7 @@ def speed_convert(size):
         zero += 1
     return f"{round(size, 2)} {units[zero]}"
 
-@Client.on_message(Filters.command("hiz", ['!','.','/']))
+@Client.on_message(filters.command("hiz", ['!','.','/']))
 async def hiztesti(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")

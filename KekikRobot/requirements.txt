@@ -1,4 +1,4 @@
-git+https://github.com/pyrogram/pyrogram@asyncio
+pyrogram==1.0.4
 tgcrypto==1.2.0
 asyncio==3.4.3
 aiohttp==3.6.2

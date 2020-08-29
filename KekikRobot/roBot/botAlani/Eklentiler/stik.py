@@ -1,10 +1,10 @@
 # https://github.com/Skuzzy_xD/TelePyroBot
 
-from pyrogram import Message, Client, Filters
+from pyrogram import Client, filters
 import asyncio
 import random
 
-@Client.on_message(Filters.command("stik", ['!','.','/']))
+@Client.on_message(filters.command("stik", ['!','.','/']))
 async def stik(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")

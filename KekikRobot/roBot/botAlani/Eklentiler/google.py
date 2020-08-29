@@ -1,12 +1,12 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 from time import time
 from google_search_client.search_client import GoogleSearchClient
 import ast
 
-@Client.on_message(Filters.command(['google'], ['!','.','/']))
+@Client.on_message(filters.command(['google'], ['!','.','/']))
 async def google(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")
