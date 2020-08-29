@@ -3,7 +3,6 @@
 from rich.console import Console
 import sys
 from pyrogram import __version__
-from pyrogram.api.all import layer
 
 konsol = Console()
 
@@ -23,4 +22,4 @@ def logo ():
 
 def baslangic():
    logo()
-   basarili(f"keyifRobot v{__version__} pyrogram tabanında çalışıyor, {layer} katman başlatıldı...\n\n")
+   basarili(f"\t\tkeyifRobot v{__version__} pyrogram tabanında çalışıyor...\n")

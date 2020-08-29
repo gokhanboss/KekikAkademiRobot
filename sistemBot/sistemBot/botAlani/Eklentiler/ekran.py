@@ -1,12 +1,12 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 from PIL import ImageGrab
 import os
 from sistemBot.botAlani import bilgiler
 
-@Client.on_message(Filters.regex('ekran ver'))
+@Client.on_message(filters.regex('ekran ver'))
 async def ssVer(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")

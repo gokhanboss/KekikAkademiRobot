@@ -1,12 +1,12 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 import cv2
 import os
 from sistemBot.botAlani import bilgiler
 
-@Client.on_message(Filters.regex('foto ver'))
+@Client.on_message(filters.regex('foto ver'))
 async def fotoVer(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")

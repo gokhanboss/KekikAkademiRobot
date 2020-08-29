@@ -1,6 +1,6 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Message, Filters
+from pyrogram import Client, filters
 import asyncio
 import json
 
@@ -18,7 +18,7 @@ keyifRobot        = Client(
 from time import time, sleep
 from os import listdir
 ""
-@keyifRobot.on_message(Filters.command(['start'], ['!','.','/']))
+@keyifRobot.on_message(filters.command(['start'], ['!','.','/']))
 async def ilk(client, message):
     if message.from_user.id != bilgiler['kurucu']:
         await message.reply(f"Admin değilmişim :)\n\n`{message.from_user.id}` __!=__ `{bilgiler['kurucu']}`")
@@ -28,7 +28,7 @@ async def ilk(client, message):
     await message.reply_chat_action("typing")                           # yazıyor aksiyonu
     await message.reply("Hoş Geldin!\n/yardim alabilirsin.")            # cevapla
 
-@keyifRobot.on_message(Filters.command(['yardim'], ['!','.','/']))
+@keyifRobot.on_message(filters.command(['yardim'], ['!','.','/']))
 async def yardim_mesaji(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")
@@ -77,7 +77,7 @@ async def yardim_mesaji(client, message):
     except Exception as hata:
         await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")
 
-@keyifRobot.on_message(Filters.command(['eklenti'], ['!','.','/']))
+@keyifRobot.on_message(filters.command(['eklenti'], ['!','.','/']))
 async def eklenti_gonder(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")

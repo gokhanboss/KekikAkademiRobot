@@ -1,6 +1,6 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import asyncio
 import os, pwd
 from pyngrok import ngrok
@@ -13,7 +13,7 @@ try:
 except:
     kullanici_adi = pwd.getpwuid(os.geteuid())[0]                     # Kullanıcı Adı
 
-@Client.on_message(Filters.regex('ssh aç'))
+@Client.on_message(filters.regex('ssh aç'))
 async def ssh(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")
@@ -51,7 +51,7 @@ async def ssh(client, message):
 
     await ilk_mesaj.edit(f"**{kullanici_adi}** __oturumunda__\n\n`{ssh_komut}`")
 
-@Client.on_message(Filters.regex('flask aç'))
+@Client.on_message(filters.regex('flask aç'))
 async def flask(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")
@@ -80,7 +80,7 @@ async def flask(client, message):
     await ilk_mesaj.edit(f"**{kullanici_adi}** __oturumunda__\n\n__Flask Yayını__ `{ssh_url}`")
 
 
-@Client.on_message(Filters.regex('ngrok kapat'))
+@Client.on_message(filters.regex('ngrok kapat'))
 async def ngrokKapat(client, message):
     # < Başlangıç
     uyku = await message.reply("__asyncio.sleep(0.3)__")
