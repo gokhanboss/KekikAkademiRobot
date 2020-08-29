@@ -4,7 +4,7 @@ from pyrogram import Client, Filters
 
 @Client.on_message(Filters.command(['admin'],['!','.','/']))
 async def admin(client, message):
-    ilk_mesaj = await message.edit("Yönetici Listesini Çıkartıyorum..")
+    ilk_mesaj = await message.reply("Yönetici Listesini Çıkartıyorum..")
 
     sohbetTuru = message.chat.type
     if sohbetTuru != "private":
@@ -26,7 +26,7 @@ async def admin(client, message):
 
 @Client.on_message(Filters.command(['bot'],['!','.','/']))
 async def bot(client, message):
-    ilk_mesaj = await message.edit("Bot Listesini Çıkartıyorum..")
+    ilk_mesaj = await message.reply("Bot Listesini Çıkartıyorum..")
 
     sohbetTuru = message.chat.type
     if sohbetTuru != "private":
@@ -40,7 +40,7 @@ async def bot(client, message):
 
 @Client.on_message(Filters.command(['silik'],['!','.','/']))
 async def silik(client, message):
-    ilk_mesaj = await message.edit("Silinmiş Hesapları Sayıyorum..")
+    ilk_mesaj = await message.reply("Silinmiş Hesapları Sayıyorum..")
 
     sohbetTuru = message.chat.type
     if sohbetTuru != "private":
@@ -55,7 +55,7 @@ async def silik(client, message):
 
 @Client.on_message(Filters.command(['hayalet'],['!','.','/']))
 async def hayalet(client, message):
-    ilk_mesaj = await message.edit("Hayalet Hesapları Sayıyorum..")
+    ilk_mesaj = await message.reply("Hayalet Hesapları Sayıyorum..")
 
     sohbetTuru = message.chat.type
     if sohbetTuru != "private":

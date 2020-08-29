@@ -47,8 +47,8 @@ async def purge(client, message):
         return
     
     if message.chat.type in ("supergroup", "channel"):
-        if await admin_kontrol(message):
-            await ilk_mesaj.edit(f"Admin değilmişim :)\n\n`{message.from_user.id}` __!=__ `{bilgiler['kurucu']}`")
+        if not await admin_kontrol(message):
+            await ilk_mesaj.edit(f"Admin değilmişim :)")
             await asyncio.sleep(2)
             await ilk_mesaj.delete()
             return

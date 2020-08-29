@@ -3,6 +3,7 @@
 from pyrogram import Client, Filters
 import asyncio
 from pytube import YouTube
+import wget
 import os
 
 @Client.on_message(Filters.command(['yt'], ['!','.','/']))
@@ -27,7 +28,7 @@ async def yt(client, message):
 
     girilen_yazi = message.text
     if not cevaplanan_mesaj and (girilen_yazi.split()) == 1:
-        await ilk_mesaj.edit("Arama yapabilmek için `bişeyler` girmelisiniz, veya @vid __mesajı yanıtlamalısınız..__")
+        await ilk_mesaj.edit("Arama yapabilmek için `Youtube Linki` girmelisiniz, veya @vid __mesajı yanıtlamalısınız..__")
         return
 
     if not cevaplanan_mesaj:
@@ -43,11 +44,15 @@ async def yt(client, message):
         await ilk_mesaj.edit("**Youtube Video Linki Verdiğine Emin OL!**")
         return
 
-    await ilk_mesaj.edit("__İndiriliyor__")    
-    video = YouTube(verilen_link).streams.get_highest_resolution().download()
-
-    await ilk_mesaj.edit(f"__Yükleniyor__ ")
-    await client.send_video(chat_id = message.chat.id, video = video, reply_to_message_id = yanitlanacak_mesaj)
+    vid = YouTube(verilen_link)
+    baslik = f"**{vid.title}**"
+    await ilk_mesaj.edit(f"**{baslik}**\n\n\t__İndiriliyor__")
+    video = vid.streams.get_highest_resolution().download()
+    resim = wget.download(vid.thumbnail_url)
+    
+    await ilk_mesaj.edit(f"**{baslik}**\n\n\t__Yükleniyor__")
+    await client.send_video(chat_id = message.chat.id, video = video, caption = baslik, thumb = resim, reply_to_message_id = yanitlanacak_mesaj)
 
     os.remove(video)
+    os.remove(resim)
     await ilk_mesaj.delete()

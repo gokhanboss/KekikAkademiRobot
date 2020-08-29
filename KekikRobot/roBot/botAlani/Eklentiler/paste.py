@@ -10,7 +10,7 @@ async def pastever(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")
     await asyncio.sleep(0.3)
-    uyku = await message.edit("__asyncio.sleep(0.3)__")
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
 
     cevaplanan_mesaj    = message.reply_to_message
     if cevaplanan_mesaj is None:
@@ -54,7 +54,7 @@ async def pastever(client, message):
 @Client.on_message(Filters.command(['pasteal'], ['!','.','/']))
 async def pasteal(client, message):
     # < Başlangıç
-    uyku = await message.edit("__asyncio.sleep(0.3)__")
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
     await asyncio.sleep(0.3)
     
     cevaplanan_mesaj    = message.reply_to_message

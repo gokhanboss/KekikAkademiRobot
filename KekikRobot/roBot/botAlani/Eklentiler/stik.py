@@ -7,7 +7,7 @@ import random
 @Client.on_message(Filters.command("stik", ['!','.','/']))
 async def stik(client, message):
     # < Başlangıç
-    uyku = await message.edit("__asyncio.sleep(0.3)__")
+    uyku = await message.reply("__asyncio.sleep(0.3)__")
     await asyncio.sleep(0.3)
     
     cevaplanan_mesaj    = message.reply_to_message
