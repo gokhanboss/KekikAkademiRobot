@@ -4,9 +4,11 @@ from pyrogram import Client, filters
 import asyncio
 import requests
 from bs4 import BeautifulSoup
-
+import wikipediaapi
 
 def yerliNedir(kelime):
+    kelime = kelime.title()
+
     url     = f"https://www.nedir.com/{kelime}"
     kimlik  = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36'}
     istek   = requests.get(url, kimlik)
@@ -21,7 +23,7 @@ def yerliNedir(kelime):
         except:
             metin = f"__{ilk_paragraf[0].text}__"
         
-        return f"**{kelime.capitalize()}**\n\n{metin}"
+        return f"**{kelime}**\n\n{metin}"
     
     elif corba.select('#didyoumean'):
         metin = googleAsor(kelime)
@@ -36,18 +38,40 @@ def yerliNedir(kelime):
         return metin
     
     else:
+        return nedirViki(kelime)
+
+def nedirViki(kelime):
+    kelime = kelime.title()
+
+    viki = wikipediaapi.Wikipedia('tr')
+
+    liste = viki.page(kelime).text.split('\n')
+
+    if len(liste[0]) > 5:
+        try:
+            metin = f"__{liste[0]}__\n\n__{liste[1]}__"
+        except:
+            metin = f"__{liste[0]}__"
+        
+        return f"**{kelime}** `Vikipedi`:\n\n{metin}"
+    else:
         return googleAsor(kelime)
 
 
-def googleAsor(ne):
-    url     = f"https://www.google.com/search?&q={ne} nedir? 'wiki'" + "&lr=lang_tr&hl=tr"
+def googleAsor(kelime):
+    kelime = kelime.title()
+
+    url     = f"https://www.google.com/search?&q={kelime} nedir? 'wiki'" + "&lr=lang_tr&hl=tr"
     kimlik  = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36'}
     istek   = requests.get(url, kimlik)
     corba   = BeautifulSoup(istek.text, "lxml")
 
     nedir = corba.find('div', class_='BNeawe').text
     
-    return f"**{ne.capitalize()}**\n\n__{nedir}__"
+    return f"**{kelime}**\n\n__{nedir}__"
+
+
+# print(yerliNedir("Pablo Escobar"))
 
 @Client.on_message(filters.command(['nedir'],['!','.','/']))
 async def nedir(client, message):
