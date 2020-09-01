@@ -50,7 +50,6 @@ async def pastever(client, message):
         inen_veri = ""
         for veri in veri_listesi:
             inen_veri += veri.decode("UTF-8")
-            inen_veri += "\n"
         
         kod = inen_veri
 
