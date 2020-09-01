@@ -33,15 +33,17 @@ async def carbon_api(client, message):
         "exportSize": "4x",
     }
 
+    # 'https://carbon.now.sh/?t={theme}&l={lang}&code={code}&bg={bg}'
+
     girilen_yazi = message.text
     if not cevaplanan_mesaj and (girilen_yazi.split()) == 1:
         await ilk_mesaj.edit("__Carbon'a yönlendirebilmem için bişeyler verin ya da mesaj yanıtlayın..__")
         return
 
     if not cevaplanan_mesaj:
-        json['code'] = girilen_yazi.split(" ", 1)[1]
+        json['code'] = girilen_yazi.split(" ", 1)[1].replace('\n', '%250A')
     else:
-        json['code'] = cevaplanan_mesaj.text
+        json['code'] = cevaplanan_mesaj.text.replace('\n', '%250A')
     
     await ilk_mesaj.edit('`Carbon yapılıyor..`')
 
@@ -49,7 +51,7 @@ async def carbon_api(client, message):
     apiUrl = "http://carbonnowsh.herokuapp.com"
     istek = post(apiUrl, json=json, stream=True)
     carbon_gorsel = "carbon.png"
-    
+    print(json)
     
     if istek.status_code == 200:
         istek.raw.decode_content = True
