@@ -1,11 +1,10 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from requests import post
-import shutil
-import os
+import shutil, os
 import asyncio
+import urllib
 
-CARBON_LANG = "Auto"
 
 @Client.on_message(filters.command(['carbon'], ['!','.','/']))
 async def carbon_api(client, message):
@@ -31,6 +30,7 @@ async def carbon_api(client, message):
         "backgroundColor": "rgba(31, 129, 109, 1)",
         "theme": "monokai",
         "exportSize": "4x",
+        "language": "auto"
     }
 
     # 'https://carbon.now.sh/?t={theme}&l={lang}&code={code}&bg={bg}'
@@ -41,17 +41,16 @@ async def carbon_api(client, message):
         return
 
     if not cevaplanan_mesaj:
-        json['code'] = girilen_yazi.split(" ", 1)[1].replace('\n', '%250A')
+        json['code'] = urllib.parse.quote(girilen_yazi.split(" ", 1)[1])
     else:
-        json['code'] = cevaplanan_mesaj.text.replace('\n', '%250A')
+        json['code'] = urllib.parse.quote(cevaplanan_mesaj.text)
     
     await ilk_mesaj.edit('`Carbon yapılıyor..`')
 
-    json["language"] = CARBON_LANG
+
     apiUrl = "http://carbonnowsh.herokuapp.com"
     istek = post(apiUrl, json=json, stream=True)
     carbon_gorsel = "carbon.png"
-    print(json)
     
     if istek.status_code == 200:
         istek.raw.decode_content = True
