@@ -35,11 +35,36 @@ async def pastever(client, message):
             await ilk_mesaj.edit("Paste yapabilmek için `uzantı` da vermelisiniz..\n\n`.pastever py` **kod**")
             return
         kod = " ".join(girilen_yazi.split()[2:]) 
-    else:
+
+    elif cevaplanan_mesaj and cevaplanan_mesaj.document:
+        if len(girilen_yazi.split()) == 1:
+            await ilk_mesaj.edit("Paste yapabilmek için `uzantı` da vermelisiniz..\n\n`.pastever py`")
+            return
+        
+        gelen_dosya = await cevaplanan_mesaj.download()
+        
+        veri_listesi = None
+        with open(gelen_dosya, "rb") as oku:
+            veri_listesi = oku.readlines()
+
+        inen_veri = ""
+        for veri in veri_listesi:
+            inen_veri += veri.decode("UTF-8")
+            inen_veri += "\n"
+        
+        kod = inen_veri
+
+        os.remove(gelen_dosya)
+
+    elif cevaplanan_mesaj.text:
         if len(girilen_yazi.split()) == 1:
             await ilk_mesaj.edit("Paste yapabilmek için `uzantı` da vermelisiniz..\n\n`.pastever py`")
             return
         kod = cevaplanan_mesaj.text
+
+    else:
+        await ilk_mesaj.edit("__güldük__")
+        return
 
     uzanti = message.text.split()[1]
     await ilk_mesaj.delete()
