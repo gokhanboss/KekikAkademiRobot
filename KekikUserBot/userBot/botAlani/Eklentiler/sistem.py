@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 import asyncio
 import requests, os, platform
 
-@Client.on_message(filters.command(['sistem'], ['!','.','/']))
+@Client.on_message(filters.command(['sistem'], ['!','.','/']) & filters.me)
 async def sistem(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

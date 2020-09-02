@@ -42,7 +42,7 @@ def nobetciEczane(il, ilce):
 # import json
 # print(json.dumps(nobetci("canakkale", "merkez"), indent=2, sort_keys=False, ensure_ascii=False))
 
-@Client.on_message(filters.command(['nobetci'],['!','.','/']))
+@Client.on_message(filters.command(['nobetci'],['!','.','/']) & filters.me)
 async def nobetci(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

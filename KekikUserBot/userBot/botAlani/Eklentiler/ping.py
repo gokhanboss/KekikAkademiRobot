@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 import asyncio
 import datetime
 
-@Client.on_message(filters.command(['ping'], ['!','.','/']))
+@Client.on_message(filters.command(['ping'], ['!','.','/']) & filters.me)
 async def ping(client, message):
     basla = datetime.datetime.now()
     

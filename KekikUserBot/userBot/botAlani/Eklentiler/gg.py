@@ -5,7 +5,7 @@ import asyncio
 from time import time
 import requests
 
-@Client.on_message(filters.command(['gg'], ['!','.', '/']))
+@Client.on_message(filters.command(['gg'], ['!','.', '/']) & filters.me)
 async def googleNasilKullanilir(client, message):                           # fonksiyon oluşturuyoruz
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

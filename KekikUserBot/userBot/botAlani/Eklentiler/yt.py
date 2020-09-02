@@ -6,7 +6,7 @@ from pytube import YouTube
 import wget
 import os
 
-@Client.on_message(filters.command(['yt'], ['!','.','/']))
+@Client.on_message(filters.command(['yt'], ['!','.','/']) & filters.me)
 async def yt(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

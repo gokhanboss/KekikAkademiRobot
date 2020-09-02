@@ -17,13 +17,13 @@ kekikUserBot        = Client(
 from time import time, sleep
 from os import listdir
 ""
-@kekikUserBot.on_message(filters.command(['start'], ['!','.','/']))
+@kekikUserBot.on_message(filters.command(['start'], ['!','.','/']) & filters.me)
 async def ilk(client, message):
     # Hoş Geldin Mesajı
     await message.reply_chat_action("typing")                           # yazıyor aksiyonu
     await message.reply("Hoş Geldin!\n/yardim alabilirsin.")            # cevapla
 
-@kekikUserBot.on_message(filters.command(['yardim'], ['!','.','/']))
+@kekikUserBot.on_message(filters.command(['yardim'], ['!','.','/']) & filters.me)
 async def yardim_mesaji(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")
@@ -68,7 +68,7 @@ async def yardim_mesaji(client, message):
     except Exception as hata:
         await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")
 
-@kekikUserBot.on_message(filters.command(['eklenti'], ['!','.','/']))
+@kekikUserBot.on_message(filters.command(['eklenti'], ['!','.','/']) & filters.me)
 async def eklenti_gonder(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")

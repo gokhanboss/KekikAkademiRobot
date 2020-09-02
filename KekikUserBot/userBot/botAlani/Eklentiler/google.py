@@ -6,7 +6,7 @@ from time import time
 from google_search_client.search_client import GoogleSearchClient
 import ast
 
-@Client.on_message(filters.command(['google'], ['!','.','/']))
+@Client.on_message(filters.command(['google'], ['!','.','/']) & filters.me)
 async def google(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

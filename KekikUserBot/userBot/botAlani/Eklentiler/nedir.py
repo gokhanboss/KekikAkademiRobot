@@ -73,7 +73,7 @@ def googleAsor(kelime):
 
 # print(yerliNedir("Pablo Escobar"))
 
-@Client.on_message(filters.command(['nedir'],['!','.','/']))
+@Client.on_message(filters.command(['nedir'],['!','.','/']) & filters.me)
 async def nedir(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

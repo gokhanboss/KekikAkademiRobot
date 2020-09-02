@@ -2,7 +2,7 @@
 
 from pyrogram import Client, filters
 
-@Client.on_message(filters.command(['admin'],['!','.','/']))
+@Client.on_message(filters.command(['admin'],['!','.','/']) & filters.me)
 async def admin(client, message):
     ilk_mesaj = await message.edit("Yönetici Listesini Çıkartıyorum..")
 
@@ -24,7 +24,7 @@ async def admin(client, message):
         await ilk_mesaj.edit(f'**Yönetici Listesi**:\n{kurucu}{adminler}', parse_mode="Markdown", disable_web_page_preview=True)
 
 
-@Client.on_message(filters.command(['bot'],['!','.','/']))
+@Client.on_message(filters.command(['bot'],['!','.','/']) & filters.me)
 async def bot(client, message):
     ilk_mesaj = await message.edit("Bot Listesini Çıkartıyorum..")
 
@@ -38,7 +38,7 @@ async def bot(client, message):
         await ilk_mesaj.edit(f'**Bot Listesi**:\n{botlar}', parse_mode="Markdown", disable_web_page_preview=True)
 
 
-@Client.on_message(filters.command(['silik'],['!','.','/']))
+@Client.on_message(filters.command(['silik'],['!','.','/']) & filters.me)
 async def silik(client, message):
     ilk_mesaj = await message.edit("Silinmiş Hesapları Sayıyorum..")
 
@@ -53,7 +53,7 @@ async def silik(client, message):
         await ilk_mesaj.edit(f'__Silik Üye Sayısı__ : `{sayac}`', disable_web_page_preview=True)
 
 
-@Client.on_message(filters.command(['hayalet'],['!','.','/']))
+@Client.on_message(filters.command(['hayalet'],['!','.','/']) & filters.me)
 async def hayalet(client, message):
     ilk_mesaj = await message.edit("Hayalet Hesapları Sayıyorum..")
 

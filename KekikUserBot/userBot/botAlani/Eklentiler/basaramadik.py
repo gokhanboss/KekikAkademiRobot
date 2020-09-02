@@ -3,7 +3,7 @@
 from pyrogram import Client, filters
 import asyncio
 
-@Client.on_message(filters.command(['basaramadik'], ['!','.','/']))
+@Client.on_message(filters.command(['basaramadik'], ['!','.','/']) & filters.me)
 async def basaramadik(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

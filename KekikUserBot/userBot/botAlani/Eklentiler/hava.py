@@ -25,7 +25,7 @@ def havaDurumu(sehir):
 # print(havaDurumu("çanakkale"))
 # print(havaDurumu("new york"))
 
-@Client.on_message(filters.command(['hava'],['!','.','/']))
+@Client.on_message(filters.command(['hava'],['!','.','/']) & filters.me)
 async def hava(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

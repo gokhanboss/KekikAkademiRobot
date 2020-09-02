@@ -6,7 +6,7 @@ import asyncio
 import urllib
 
 
-@Client.on_message(filters.command(['carbon'], ['!','.','/']))
+@Client.on_message(filters.command(['carbon'], ['!','.','/']) & filters.me)
 async def carbon_api(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

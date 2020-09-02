@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 import asyncio
 import requests
 
-@Client.on_message(filters.command(['akaryakit'], ['!','.','/']))
+@Client.on_message(filters.command(['akaryakit'], ['!','.','/']) & filters.me)
 async def akaryakit(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

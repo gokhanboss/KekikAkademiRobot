@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 import asyncio
 
-@Client.on_message(filters.command(['deli'], ['!','.','/']))
+@Client.on_message(filters.command(['deli'], ['!','.','/']) & filters.me)
 async def deli(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

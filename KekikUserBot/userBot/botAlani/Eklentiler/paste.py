@@ -5,7 +5,7 @@ import asyncio
 import requests
 import os
 
-@Client.on_message(filters.command(['pastever'], ['!','.','/']))
+@Client.on_message(filters.command(['pastever'], ['!','.','/']) & filters.me)
 async def pastever(client, message):
     # < Başlangıç
     await message.reply_chat_action("typing")
@@ -75,7 +75,7 @@ async def pastever(client, message):
                   reply_to_message_id       = yanitlanacak_mesaj
                   )
 
-@Client.on_message(filters.command(['pasteal'], ['!','.','/']))
+@Client.on_message(filters.command(['pasteal'], ['!','.','/']) & filters.me)
 async def pasteal(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

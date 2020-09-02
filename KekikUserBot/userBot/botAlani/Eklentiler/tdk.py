@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 import asyncio
 import requests
 
-@Client.on_message(filters.command(['tdk'], ['!','.','/']))
+@Client.on_message(filters.command(['tdk'], ['!','.','/']) & filters.me)
 async def tdk(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

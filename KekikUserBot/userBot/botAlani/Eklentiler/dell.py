@@ -23,7 +23,7 @@ async def admin_kontrol(message: Message) -> bool:
     else:
         return True
 
-@Client.on_message(filters.command("dell", ['!','.','/']))
+@Client.on_message(filters.command("dell", ['!','.','/']) & filters.me)
 async def purge(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")

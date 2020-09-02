@@ -13,7 +13,7 @@ def speed_convert(size):
         zero += 1
     return f"{round(size, 2)} {units[zero]}"
 
-@Client.on_message(filters.command("hiz", ['!','.','/']))
+@Client.on_message(filters.command("hiz", ['!','.','/']) & filters.me)
 async def hiztesti(client, message):
     # < Başlangıç
     uyku = await message.edit("__asyncio.sleep(0.3)__")
