@@ -112,10 +112,10 @@ async def eklenti_al(client, message):
         
         try:
             eklenti_indir = await client.download_media(message=cevaplanan_mesaj, file_name=eklenti_dizini)
-            if eklenti_indir:
-                await message.edit(f"**Eklenti Yüklendi:** `{cevaplanan_mesaj.document.file_name}`")
-                return
-        
+            await asyncio.sleep(2)
+            await ilk_mesaj.edit(f"**Eklenti Yüklendi:** `{cevaplanan_mesaj.document.file_name}`")
+            return
+
         except Exception as hata:
             await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")
     
@@ -149,6 +149,7 @@ async def eklenti_sil(client, message):
         
         if os.path.exists(eklenti_dizini):
             os.remove(eklenti_dizini)
+            await asyncio.sleep(2)
             await ilk_mesaj.edit(f"**Eklenti Silindi:** `{message.command[1]}`")
             return
         
