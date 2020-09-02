@@ -3,6 +3,39 @@
 from pyrogram import Client, filters
 import asyncio, os
 
+@Client.on_message(filters.command(['eklentilist'], ['!','.','/']) & filters.me)
+async def eklenti_list(client, message):
+    # < Başlangıç
+    await message.reply_chat_action("typing")
+    await asyncio.sleep(0.3)
+    uyku = await message.edit("__asyncio.sleep(0.3)__")
+
+    cevaplanan_mesaj    = message.reply_to_message
+    if cevaplanan_mesaj is None:
+        yanitlanacak_mesaj  = message.message_id
+    else:
+        yanitlanacak_mesaj = cevaplanan_mesaj.message_id
+    
+    await uyku.delete()
+    ilk_mesaj = await message.reply("__Bekleyin..__",
+        reply_to_message_id         = yanitlanacak_mesaj,
+        disable_web_page_preview    = True,
+        parse_mode                  = "Markdown"
+    )
+    #------------------------------------------------------------- Başlangıç >
+
+    mesaj = "__Eklentilerim;__\n"
+
+    for dosya in os.listdir("./userBot/botAlani/Eklentiler/"):
+        if not dosya.endswith(".py"):
+            continue
+        mesaj += f"📂 `{dosya.replace('.py','')}`\n"
+    
+    try:
+        await ilk_mesaj.edit(mesaj)
+    except Exception as hata:
+        await ilk_mesaj.edit(f"**Uuppss:**\n\n`{hata}`")
+
 @Client.on_message(filters.command(['eklentiver'], ['!','.','/']) & filters.me)
 async def eklenti_ver(client, message):
     # < Başlangıç
